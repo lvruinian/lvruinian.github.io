@@ -1,7 +1,7 @@
 ---
-title: Hexo 初使用
+title: Hexo&nbsp;初使用
 ---
-## Hexo 初使用
+## Hexo&nbsp;初使用
 > Hexo这个博客框架给人的第一印象是轻量，使用markdown语法编写，采用静态页面的方式，可直接部署到github管理，支持插件扩展  
 > 还有很多特性有待挖掘  
 > [Hexo的官方网站](https://hexo.io/zh-cn/)
