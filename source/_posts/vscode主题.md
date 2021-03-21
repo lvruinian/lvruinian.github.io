@@ -1,5 +1,5 @@
 ---
-title:推荐几款不错的vscode主题
+title: 推荐几款不错的vscode主题
 ---
 ## 推荐几款不错的vscode主题
 ### 主题
