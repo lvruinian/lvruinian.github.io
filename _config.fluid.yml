@@ -673,7 +673,7 @@ gitalk:
 valine:
   appid: 9wFEYD0ysbkpXD8QjDGpTEXV-gzGzoHsz
   appkey: zAzwo6Of8uEKpze3e4N7Ni6K
-  placeholder: 说点什么
+  placeholder: 你想说点什么
   path: window.location.pathname
   avatar: retro
   meta: ['nick', 'mail', 'link']
