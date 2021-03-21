@@ -172,8 +172,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-03-16 21:58" pubdate>
-        2021年3月16日 晚上
+      <time datetime="2021-03-20 15:40" pubdate>
+        2021年3月20日 下午
       </time>
     </span>
   
@@ -184,7 +184,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      152 字
+      1.2k 字
     </span>
   
 
@@ -194,7 +194,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      12
        分钟
     </span>
   
@@ -234,6 +234,18 @@
 <li>arguments对象还有一些附加的属性 （如callee属性）</li>
 </ul>
 <h3 id="CSS-浏览器前缀"><a href="#CSS-浏览器前缀" class="headerlink" title="CSS 浏览器前缀"></a>CSS 浏览器前缀</h3><p>-moz-：Firefox<br>-webkit-：Safari 和 Chrome<br>-o-：Opera</p>
+<h3 id="地址栏输入一个URL到页面呈现，中间会发生什么"><a href="#地址栏输入一个URL到页面呈现，中间会发生什么" class="headerlink" title="地址栏输入一个URL到页面呈现，中间会发生什么"></a>地址栏输入一个URL到页面呈现，中间会发生什么</h3><p>输入URL，需要找到这个URL域名的服务器IP，浏览器首先会查找<strong>缓存</strong>，查看缓存中是否有记录<br>缓存的查找记录为：浏览器缓存 -&gt; 系统缓存 -&gt; 路由器缓存<br>缓存中若没有则去查找<strong>系统hosts文件</strong>中是否有记录，若没有则查询<strong>DNS服务器</strong><br>得到服务器IP地址后，浏览器根据IP及端口号，构造一个http请求，这个请求报文会包含请求信息，将这个http请求封装在一个<strong>tcp包</strong>中，tcp包会依次经过传输层，网络层，数据链路层，物理层到达服务器，服务器解析这个请求来作出响应，返回相应的html给服务器<br>因为html是一个树形结构，浏览器根据html构建<strong>dom树</strong>，在dom树的构建过程中如果与遇到JS脚本和外部JS链接，则会停止构建DOM树去执行和下载其它的代码，造成堵塞，这也是为什么推荐JS代码放在html代码的后面，之后根据外部/内部/内联样式，构建一个<strong>CSS对象模型树（CSSOM树）</strong>，构建完成后和DOM树合并为渲染树，这里主要做的是排除非视觉节点，比如script，meta标签和排除display为none的节点，之后进行布局，布局主要是确定各个元素的位置和尺寸，之后是渲染页面，因为html文件中会含有图片，视频，音频等资源，在解析DOM的过程中，遇到这些都会<strong>并行下载</strong>，浏览器对每个域的并行下载有限制，一般是4-6个，其中我们需要关注缓存，一般通过Cache-Control,Last-Modify,Expires等首部字段控制。</p>
+<p>Cache-Control和Expires的区别在于前者使用相对时间，后者使用基于服务器的绝对时间，因为存在时差问题，一般采用前者，请求设置了缓存的数据时，会先查看是否过期，如果没有过期则直接使用本地缓存，过期则请求并在服务器校验文件是否修改，如果上次响应设置了ETag值会在这次请求时作为If-None-Match的值交给服务器校验，如果一致，继续校验Last-Modified，没有设置Etag则直接验证Last-Modified，再决定是否返回<strong>304</strong></p>
+<h3 id="简单说一下cookie，localStorage，sessionStorage的区别"><a href="#简单说一下cookie，localStorage，sessionStorage的区别" class="headerlink" title="简单说一下cookie，localStorage，sessionStorage的区别"></a>简单说一下cookie，localStorage，sessionStorage的区别</h3><p><strong>cookie</strong><br><strong>生命周期：</strong> 可设置失效时间，默认为关闭浏览器后失效<br><strong>存放数据：</strong> 4K左右<br><strong>http请求：</strong> 携带在http头中，如果使用cookie保存过多数据会带来性能问题<br><strong>易用性：</strong> 需要自己封装，原生接口不友好</p>
+<p><strong>localStorage</strong><br><strong>生命周期：</strong> 除非被手动清除，否则永久保存<br><strong>存放数据：</strong> 5M左右<br><strong>http请求：</strong> 保存在客户端即浏览器，不与服务器通信<br><strong>易用性：</strong> 采用原生接口，可自己封装</p>
+<p><strong>sessionStorage</strong><br><strong>生命周期：</strong> 仅在当前网页会话下有效，关闭页面或浏览器后就会被清除<br><strong>存放数据：</strong> 5M左右<br><strong>http请求：</strong> 保存在客户端即浏览器，不与服务器通信<br><strong>易用性：</strong> 采用原生接口，可自己封装</p>
+<p><strong>应用场景</strong><br>http请求携带cookie信息，浪费带宽，尽可能少用，此外cookie需要指定作用域，不可以跨域使用，限制很多，但对于识别用户登录来说，cookie还是比storage好用，其他情况下可以用storage，localStorage在页面传递参数，sessionStorage可以保存一些临时数据，防止刷新页面后丢失了一些参数</p>
+<h2 id="web性能优化"><a href="#web性能优化" class="headerlink" title="web性能优化"></a>web性能优化</h2><ul>
+<li>降低请求量：合并资源，减少http请求数量，minify/gzip压缩，webp，lazyLoad  </li>
+<li>加快请求速度：预解析DNS，减少域名树，并行加载，CDN分发 </li>
+<li>缓存：http协议缓存请求，离线缓存manifest，离线数据缓存localStorage  </li>
+<li>渲染：JS/CSS优化，加载顺序，服务端渲染，pipeline</li>
+</ul>
 
             </div>
             <hr>
@@ -250,18 +262,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/03/16/vscode%E4%B8%BB%E9%A2%98/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/03/07/Hexo%E5%88%9D%E4%BD%BF%E7%94%A8/">
-                        <span class="hidden-mobile">Hexo初使用</span>
+                      <a href="/2021/03/16/vscode%E4%B8%BB%E9%A2%98/">
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
